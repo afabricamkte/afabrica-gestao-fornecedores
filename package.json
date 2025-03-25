@@ -1,8 +1,16 @@
 {
   "name": "afabrica-gestao-fornecedores",
   "version": "0.1.0",
-  "homepage": "https://afrabricamkte.com.br",
+  "homepage": "https://afabricamkte.github.io/afabrica-gestao-fornecedores",
   "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -14,14 +22,6 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.10.3",
     "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "@vitejs/plugin-react": "^4.3.4",
+    "gh-pages": "^6.3.0",
+    "vite": "^6.2.3"
   }
 }
