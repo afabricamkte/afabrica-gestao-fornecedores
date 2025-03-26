@@ -29,8 +29,8 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
   };
   
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-4">{fornecedor ? 'Editar Fornecedor' : 'Novo Fornecedor'}</h2>
+    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+      <h2 className="text-xl font-bold mb-4 text-primary border-b pb-2">{fornecedor ? 'Editar Fornecedor' : 'Novo Fornecedor'}</h2>
       
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -41,7 +41,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="nome"
               value={form.nome}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -53,7 +53,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="cnpj"
               value={form.cnpj}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               placeholder="00.000.000/0000-00"
             />
           </div>
@@ -65,7 +65,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="contato"
               value={form.contato}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             />
           </div>
           
@@ -76,7 +76,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -88,7 +88,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="telefone"
               value={form.telefone}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -100,7 +100,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="endereco"
               value={form.endereco}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             />
           </div>
           
@@ -110,7 +110,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="tipoServico"
               value={form.tipoServico}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             >
               <option value="">Selecione...</option>
@@ -129,7 +129,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="valor"
               value={form.valor}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               min="0"
               step="0.01"
               required
@@ -142,7 +142,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
               name="statusPagamento"
               value={form.statusPagamento}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             >
               <option value="Pendente">Pendente</option>
@@ -160,7 +160,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
                   key={star}
                   type="button"
                   onClick={() => setForm({ ...form, avaliacao: star })}
-                  className="focus:outline-none"
+                  className="focus:outline-none transition-colors duration-200"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +184,7 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
             name="observacoes"
             value={form.observacoes}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             rows="3"
           ></textarea>
         </div>
@@ -193,13 +193,13 @@ const FornecedorForm = ({ fornecedor, servicos, onSave, onCancel }) => {
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-all duration-300"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90"
+            className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300"
           >
             Salvar
           </button>
@@ -240,7 +240,7 @@ const FornecedoresList = ({ fornecedores, servicos, userRole, onEdit, onDelete }
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             placeholder="Buscar fornecedores..."
           />
           <Search size={18} className="absolute left-3 top-2.5 text-gray-400" />
@@ -250,7 +250,7 @@ const FornecedoresList = ({ fornecedores, servicos, userRole, onEdit, onDelete }
           <select
             value={selectedServico}
             onChange={(e) => setSelectedServico(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
+            className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
           >
             <option value="">Todos os serviços</option>
             {servicos.map((servico) => (
@@ -262,9 +262,9 @@ const FornecedoresList = ({ fornecedores, servicos, userRole, onEdit, onDelete }
         </div>
       </div>
       
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 border-b">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Nome
@@ -288,7 +288,7 @@ const FornecedoresList = ({ fornecedores, servicos, userRole, onEdit, onDelete }
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredFornecedores.length > 0 ? (
               filteredFornecedores.map((fornecedor) => (
-                <tr key={fornecedor.id}>
+                <tr key={fornecedor.id} className="hover:bg-gray-50 transition-colors duration-150">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">{fornecedor.nome}</div>
                     <div className="text-sm text-gray-500">{fornecedor.email}</div>
@@ -318,14 +318,14 @@ const FornecedoresList = ({ fornecedores, servicos, userRole, onEdit, onDelete }
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => onEdit(fornecedor)}
-                        className="text-primary hover:text-primary-dark mr-3"
+                        className="text-accent hover:text-accent-light transition-colors duration-300 mr-3"
                       >
                         <Edit size={18} />
                       </button>
                       {userRole === 'admin' && (
                         <button
                           onClick={() => onDelete(fornecedor.id)}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-danger hover:text-danger/70 transition-colors duration-300"
                         >
                           <Trash2 size={18} />
                         </button>
@@ -383,7 +383,7 @@ const FornecedoresManager = ({ fornecedores, servicos, userRole, onAddFornecedor
         {(userRole === 'admin' || userRole === 'collaborator') && (
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center bg-primary text-white px-4 py-2 rounded hover:bg-opacity-90"
+            className="flex items-center bg-accent hover:bg-accent-light text-white hover:text-primary-dark px-4 py-2 rounded-lg transition-all duration-300 shadow-sm"
           >
             <PlusCircle size={18} className="mr-2" />
             Novo Fornecedor

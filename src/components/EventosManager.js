@@ -39,8 +39,8 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
   };
   
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-4">{evento ? 'Editar Evento' : 'Novo Evento'}</h2>
+    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+      <h2 className="text-xl font-bold mb-4 text-primary border-b pb-2">{evento ? 'Editar Evento' : 'Novo Evento'}</h2>
       
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -51,7 +51,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="nome"
               value={form.nome}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -63,7 +63,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="cliente"
               value={form.cliente}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -75,7 +75,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="dataInicio"
               value={form.dataInicio}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -87,7 +87,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="dataFim"
               value={form.dataFim}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -99,7 +99,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="local"
               value={form.local}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             />
           </div>
@@ -111,7 +111,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="orcamentoTotal"
               value={form.orcamentoTotal}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               min="0"
               step="0.01"
               required
@@ -124,7 +124,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
               name="status"
               value={form.status}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               required
             >
               <option value="Proposta enviada">Proposta enviada</option>
@@ -143,7 +143,7 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
             name="descricao"
             value={form.descricao}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             rows="3"
           ></textarea>
         </div>
@@ -176,13 +176,13 @@ const EventoForm = ({ evento, fornecedores, onSave, onCancel }) => {
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-all duration-300"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90"
+            className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300"
           >
             Salvar
           </button>
@@ -263,7 +263,7 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
         {(userRole === 'admin' || userRole === 'collaborator') && (
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center bg-primary text-white px-4 py-2 rounded hover:bg-opacity-90"
+            className="flex items-center bg-accent hover:bg-accent-light text-white hover:text-primary-dark px-4 py-2 rounded-lg transition-all duration-300 shadow-sm"
           >
             <PlusCircle size={18} className="mr-2" />
             Novo Evento
@@ -286,7 +286,7 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 placeholder="Buscar eventos..."
               />
               <Search size={18} className="absolute left-3 top-2.5 text-gray-400" />
@@ -295,7 +295,7 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="p-2 border border-gray-300 rounded"
+              className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
             >
               <option value="">Todos os status</option>
               <option value="Proposta enviada">Proposta enviada</option>
@@ -316,11 +316,11 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
                 );
                 
                 return (
-                  <div key={evento.id} className="bg-white rounded-lg shadow overflow-hidden">
+                  <div key={evento.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
                     <div className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="text-lg font-bold text-primary">{evento.nome}</h3>
-                        <span className={`px-3 py-1 rounded-full flex items-center text-xs ${statusStyles.color}`}>
+                        <span className={`px-3 py-1 rounded-full flex items-center text-xs font-medium ${statusStyles.color} shadow-sm`}>
                           {statusStyles.icon}
                           {evento.status}
                         </span>
@@ -359,7 +359,7 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
                         <div className="flex justify-end space-x-2">
                           <button
                             onClick={() => handleEdit(evento)}
-                            className="text-primary hover:text-primary-dark"
+                            className="text-accent hover:text-accent-light transition-colors duration-300"
                           >
                             <Edit size={18} />
                           </button>
@@ -370,7 +370,7 @@ const EventosManager = ({ eventos, fornecedores, userRole, onAddEvento, onUpdate
                                   onDeleteEvento(evento.id);
                                 }
                               }}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-danger hover:text-danger/70 transition-colors duration-300"
                             >
                               <Trash2 size={18} />
                             </button>

@@ -25,25 +25,25 @@ const Dashboard = ({ fornecedores, servicos }) => {
       <h2 className="text-3xl font-bold mb-6">Dashboard</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-2">Fornecedores</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-50">
+          <h3 className="text-lg font-bold mb-2 text-primary border-b pb-2">Fornecedores</h3>
           <p className="text-3xl font-bold">{totalFornecedores}</p>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-2">Tipos de Serviço</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-50">
+          <h3 className="text-lg font-bold mb-2 text-primary border-b pb-2">Tipos de Serviço</h3>
           <p className="text-3xl font-bold">{totalServicos}</p>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-2">Total Comprometido</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-50">
+          <h3 className="text-lg font-bold mb-2 text-primary border-b pb-2">Total Comprometido</h3>
           <p className="text-3xl font-bold">R$ {totalCompromisso.toLocaleString('pt-BR')}</p>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4">Fornecedores por Tipo de Serviço</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-50 hover:shadow-lg transition-all duration-300">
+          <h3 className="text-xl font-bold mb-6 text-primary border-b pb-2">Fornecedores por Tipo de Serviço</h3>
           <div className="space-y-4">
             {Object.keys(fornecedoresPorServico).map((servico) => (
               <div key={servico} className="flex items-center">
@@ -62,33 +62,35 @@ const Dashboard = ({ fornecedores, servicos }) => {
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow h-80">
-          <h3 className="text-xl font-bold mb-4">Distribuição de Fornecedores</h3>
-          <ResponsiveContainer width="100%" height="90%">
-            <PieChart>
-              <Pie
-                data={dataServicos}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              >
-                {dataServicos.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                formatter={(value) => [`${value} fornecedores`, 'Quantidade']}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-50 hover:shadow-lg transition-all duration-300">
+          <h3 className="text-xl font-bold mb-6 text-primary border-b pb-2">Distribuição de Fornecedores</h3>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={dataServicos}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                >
+                  {dataServicos.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  formatter={(value) => [`${value} fornecedores`, 'Quantidade']}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
       
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-xl font-bold mb-4">Evolução de Gastos (Últimos 6 meses)</h3>
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-50 hover:shadow-lg transition-all duration-300">
+        <h3 className="text-xl font-bold mb-6 text-primary border-b pb-2">Evolução de Gastos (Últimos 6 meses)</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={[

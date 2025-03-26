@@ -28,8 +28,10 @@ const Sidebar = ({ activeTab, setActiveTab, userRole }) => {
             <li key={tab.id} className="mb-2">
               <button
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center p-2 rounded ${
-                  activeTab === tab.id ? 'bg-secondary text-primary' : 'hover:bg-opacity-10 hover:bg-secondary'
+                className={`w-full flex items-center p-3 rounded-lg transition-all duration-300 ${
+                  activeTab === tab.id 
+                    ? 'bg-secondary text-primary shadow-sm font-medium' 
+                    : 'text-gray-300 hover:bg-primary-light hover:text-white'
                 }`}
               >
                 <span className="mr-2">{tab.icon}</span>

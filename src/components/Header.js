@@ -6,7 +6,7 @@ const Header = ({ user, organizations, currentOrg, onOrgChange, onLogout }) => {
   const [orgMenuOpen, setOrgMenuOpen] = useState(false);
   
   return (
-    <header className="bg-primary text-secondary py-4 px-6">
+    <header className="bg-gradient-to-r from-primary to-primary-light text-secondary py-4 px-6 shadow-md z-10">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <h1 className="text-2xl font-bold mr-2">AFÁBRICA</h1>
@@ -62,7 +62,7 @@ const Header = ({ user, organizations, currentOrg, onOrgChange, onLogout }) => {
           <div className="relative">
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex items-center space-x-2 focus:outline-none"
+              className="flex items-center space-x-2 focus:outline-none bg-primary-light/30 hover:bg-primary-light/50 px-3 py-2 rounded-full transition-all duration-300"
             >
               <div className="w-8 h-8 bg-secondary text-primary rounded-full flex items-center justify-center font-medium">
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -72,7 +72,7 @@ const Header = ({ user, organizations, currentOrg, onOrgChange, onLogout }) => {
             </button>
             
             {menuOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1 z-10">
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg py-1 z-10 border border-gray-100 animate-fadeIn">
                 <div className="px-4 py-2 text-sm text-gray-700 border-b">
                   <p className="font-medium">{user.name || user.email}</p>
                   <p className="text-xs">{user.email}</p>

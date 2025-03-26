@@ -54,32 +54,32 @@ const ConfiguracoesManager = ({ userRole }) => {
       <h2 className="text-3xl font-bold mb-6">Configurações</h2>
       
       <div className="mb-6">
-        <div className="flex overflow-x-auto space-x-2 border-b border-gray-200">
+        <div className="flex overflow-x-auto space-x-2 border-b border-gray-200 mb-6 no-scrollbar">
           <button
-            className={`py-2 px-4 font-medium border-b-2 ${
+            className={`py-3 px-4 font-medium border-b-2 transition-all duration-300 ${
               activeTab === 'geral'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-accent text-accent'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('geral')}
           >
             Gerais
           </button>
           <button
-            className={`py-2 px-4 font-medium border-b-2 ${
+            className={`py-3 px-4 font-medium border-b-2 transition-all duration-300 ${
               activeTab === 'notificacoes'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-accent text-accent'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('notificacoes')}
           >
             Notificações
           </button>
           <button
-            className={`py-2 px-4 font-medium border-b-2 ${
+            className={`py-3 px-4 font-medium border-b-2 transition-all duration-300 ${
               activeTab === 'personalizacao'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-accent text-accent'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('personalizacao')}
           >
@@ -87,10 +87,10 @@ const ConfiguracoesManager = ({ userRole }) => {
           </button>
           {userRole === 'admin' && (
             <button
-              className={`py-2 px-4 font-medium border-b-2 ${
+              className={`py-3 px-4 font-medium border-b-2 transition-all duration-300 ${
                 activeTab === 'sistema'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'border-accent text-accent'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
               onClick={() => setActiveTab('sistema')}
             >
@@ -101,13 +101,13 @@ const ConfiguracoesManager = ({ userRole }) => {
       </div>
       
       {activeTab === 'geral' && (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4">Configurações Gerais</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+          <h3 className="text-xl font-bold mb-4 text-primary border-b pb-2">Configurações Gerais</h3>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Idioma</label>
               <select 
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               >
                 <option>Português (Brasil)</option>
                 <option>English</option>
@@ -117,7 +117,7 @@ const ConfiguracoesManager = ({ userRole }) => {
             <div>
               <label className="block text-sm font-medium mb-1">Fuso Horário</label>
               <select 
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               >
                 <option>Brasília (GMT-3)</option>
                 <option>São Paulo (GMT-3)</option>
@@ -127,7 +127,7 @@ const ConfiguracoesManager = ({ userRole }) => {
             <div>
               <label className="block text-sm font-medium mb-1">Formato de Data</label>
               <select 
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               >
                 <option>DD/MM/AAAA</option>
                 <option>MM/DD/AAAA</option>
@@ -137,7 +137,7 @@ const ConfiguracoesManager = ({ userRole }) => {
           </div>
           
           <div className="mt-4 flex justify-end">
-            <button className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90">
+            <button className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300">
               Salvar Configurações
             </button>
           </div>
@@ -145,8 +145,8 @@ const ConfiguracoesManager = ({ userRole }) => {
       )}
       
       {activeTab === 'notificacoes' && (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4">Notificações</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+          <h3 className="text-xl font-bold mb-4 text-primary border-b pb-2">Notificações</h3>
           <div className="space-y-3">
             <label className="flex items-center">
               <input
@@ -194,7 +194,7 @@ const ConfiguracoesManager = ({ userRole }) => {
           </div>
           
           <div className="mt-6">
-            <h4 className="text-md font-medium mb-2">Método de Entrega</h4>
+            <h4 className="text-md font-medium mb-2 text-primary">Método de Entrega</h4>
             <div className="space-y-2">
               <label className="flex items-center">
                 <input
@@ -216,7 +216,7 @@ const ConfiguracoesManager = ({ userRole }) => {
           </div>
           
           <div className="mt-4 flex justify-end">
-            <button className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90">
+            <button className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300">
               Salvar Preferências
             </button>
           </div>
@@ -224,8 +224,8 @@ const ConfiguracoesManager = ({ userRole }) => {
       )}
       
       {activeTab === 'personalizacao' && (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4">Personalização</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+          <h3 className="text-xl font-bold mb-4 text-primary border-b pb-2">Personalização</h3>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Modo de Exibição</label>
@@ -233,7 +233,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                 name="modo"
                 value={tema.modo}
                 onChange={handleTemaChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
               >
                 <option value="claro">Claro</option>
                 <option value="escuro">Escuro</option>
@@ -256,7 +256,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="corPrincipal"
                   value={tema.corPrincipal} 
                   onChange={handleTemaChange}
-                  className="p-2 border border-gray-300 rounded"
+                  className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -276,7 +276,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="corSecundaria"
                   value={tema.corSecundaria} 
                   onChange={handleTemaChange}
-                  className="p-2 border border-gray-300 rounded"
+                  className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -296,14 +296,14 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="corTerciaria"
                   value={tema.corTerciaria} 
                   onChange={handleTemaChange}
-                  className="p-2 border border-gray-300 rounded"
+                  className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
             </div>
           </div>
           
           <div className="mt-4 flex justify-end">
-            <button className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90">
+            <button className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300">
               Salvar Tema
             </button>
           </div>
@@ -312,8 +312,8 @@ const ConfiguracoesManager = ({ userRole }) => {
       
       {activeTab === 'sistema' && userRole === 'admin' && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold mb-4">Configurações de Email</h3>
+          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+            <h3 className="text-xl font-bold mb-4 text-primary border-b pb-2">Configurações de Email</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Servidor SMTP</label>
@@ -322,7 +322,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="smtpServer"
                   value={emailConfig.smtpServer}
                   onChange={handleEmailChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
               
@@ -333,7 +333,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="port"
                   value={emailConfig.port}
                   onChange={handleEmailChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
               
@@ -344,7 +344,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="username"
                   value={emailConfig.username}
                   onChange={handleEmailChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
               
@@ -355,7 +355,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   name="password"
                   value={emailConfig.password}
                   onChange={handleEmailChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
               
@@ -374,18 +374,18 @@ const ConfiguracoesManager = ({ userRole }) => {
             </div>
             
             <div className="mt-4 flex justify-end">
-              <button className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90">
+              <button className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300">
                 Salvar Configurações
               </button>
             </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold mb-4">Configurações Avançadas</h3>
+          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+            <h3 className="text-xl font-bold mb-4 text-primary border-b pb-2">Configurações Avançadas</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Limite de Itens por Página</label>
-                <select className="w-full p-2 border border-gray-300 rounded">
+                <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all">
                   <option>10</option>
                   <option>25</option>
                   <option>50</option>
@@ -395,7 +395,7 @@ const ConfiguracoesManager = ({ userRole }) => {
               
               <div>
                 <label className="block text-sm font-medium mb-1">Política de Backup</label>
-                <select className="w-full p-2 border border-gray-300 rounded">
+                <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all">
                   <option>Diário</option>
                   <option>Semanal</option>
                   <option>Mensal</option>
@@ -408,7 +408,7 @@ const ConfiguracoesManager = ({ userRole }) => {
                   type="number"
                   min="5"
                   value="30"
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all"
                 />
               </div>
               
@@ -428,7 +428,7 @@ const ConfiguracoesManager = ({ userRole }) => {
             </div>
             
             <div className="mt-4 flex justify-end">
-              <button className="px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90">
+              <button className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-light transition-all duration-300">
                 Salvar Configurações
               </button>
             </div>
