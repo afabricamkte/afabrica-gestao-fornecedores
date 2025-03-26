@@ -13,7 +13,7 @@ import UsersManager from './components/UsersManager';
 import SubscriptionManager from './components/SubscriptionManager';
 import IntegrationsManager from './components/IntegrationsManager';
 import Onboarding from './components/Onboarding';
-import { Calendar, MessageSquare, DollarSign } from 'lucide-react'; // Adicione esta linha
+import { Calendar, MessageSquare, DollarSign } from 'lucide-react';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -84,7 +84,7 @@ const App = () => {
     }
   ]);
   
-  const [integrations, setIntegrations] = useState([
+  const [integrations] = useState([
     { 
       id: 1, 
       name: 'Google Calendar', 
@@ -225,36 +225,16 @@ const App = () => {
     setUser(null);
   };
   
-  const handleUpdatePlan = (planId) => {
-    setSubscription({
-      ...subscription,
-      plan: planId
-    });
-  };
-  
-  const handleCreateApiKey = (name) => {
-    const newKey = {
-      id: Date.now(),
-      name,
-      prefix: 'sk_live_' + Math.random().toString(36).substring(2, 10),
-      createdAt: new Date().toLocaleDateString('pt-BR'),
-      lastUsed: null
-    };
-    
-    setApiKeys([...apiKeys, newKey]);
-    
-    return {
-      ...newKey,
-      key: newKey.prefix + Math.random().toString(36).substring(2, 30)
-    };
+  const handleCreateApiKey = (apiKey) => {
+    setApiKeys([...apiKeys, apiKey]);
   };
   
   const handleRevokeApiKey = (id) => {
-    setApiKeys(apiKeys.filter(key => key.id !== id));
+    setApiKeys(apiKeys.filter((key) => key.id !== id));
   };
   
   const handleAddWebhook = (webhook) => {
-    setWebhooks([...webhooks, { ...webhook, id: Date.now() }]);
+    setWebhooks([...webhooks, webhook]);
   };
   
   const handleUpdateWebhook = (updatedWebhook) => {
