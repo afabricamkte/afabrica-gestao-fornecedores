@@ -299,6 +299,13 @@ const App = () => {
   const handleDeleteServico = (id) => {
     setServicos(servicos.filter((s) => s.id !== id));
   };
+
+  const handleUpdatePlan = (planId) => {
+    setSubscription({
+      ...subscription,
+      plan: planId
+    });
+  };
   
   if (!user) {
     return <Login onLogin={handleLogin} />;
