@@ -1,4 +1,3 @@
-// filepath: /workspaces/afabrica-gestao-fornecedores/webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
