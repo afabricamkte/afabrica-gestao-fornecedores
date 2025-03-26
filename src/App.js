@@ -13,6 +13,7 @@ import UsersManager from './components/UsersManager';
 import SubscriptionManager from './components/SubscriptionManager';
 import IntegrationsManager from './components/IntegrationsManager';
 import Onboarding from './components/Onboarding';
+import { Calendar, MessageSquare, DollarSign } from 'lucide-react'; // Adicione esta linha
 
 const App = () => {
   const [user, setUser] = useState(null);
