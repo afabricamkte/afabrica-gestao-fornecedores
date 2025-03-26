@@ -9,7 +9,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 // Função para criar estilo global com as fontes da AFÁBRICA
 const GlobalStyles = () => {
   return (
-    <style jsx global>{`
+    <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap');
       
       :root {
@@ -290,14 +290,14 @@ const Login = ({ onLogin }) => {
     // Em um cenário real, validaria credenciais com API
     
     // Simulação de login com usuários do sistema
-    const usuarioEncontrado = dadosIniciais.usuarios.find(
-      (u) => u.email === email && u.senha === password
+    const usuarioEncontrado = dadosIniciais?.usuarios?.find(
+      (u) => u?.email === email && u?.senha === password
     );
     
     if (usuarioEncontrado) {
       let empresa = null;
       if (usuarioEncontrado.empresaId) {
-        empresa = dadosIniciais.empresas.find(e => e.id === usuarioEncontrado.empresaId);
+        empresa = dadosIniciais?.empresas?.find(e => e?.id === usuarioEncontrado.empresaId);
       }
       
       onLogin({ ...usuarioEncontrado, empresa });
@@ -1131,9 +1131,9 @@ const EventosManager = ({ user, events, fornecedores, onAddEvent, onUpdateEvent,
     };
     
     const handleFornecedorToggle = (id) => {
-      const newIds = form.fornecedoresIds.includes(id)
+      const newIds = form.fornecedoresIds && form.fornecedoresIds.includes(id)
         ? form.fornecedoresIds.filter(fId => fId !== id)
-        : [...form.fornecedoresIds, id];
+        : [...(form.fornecedoresIds || []), id];
       
       setForm({ ...form, fornecedoresIds: newIds });
     };
@@ -1619,4 +1619,4 @@ const EventosManager = ({ user, events, fornecedores, onAddEvent, onUpdateEvent,
         </div>
       )}
     </div>
-  );
+  );}
