@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "vercel-build": "npm install --legacy-peer-deps && webpack --mode production"
+    "vercel-build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "lucide-react": "^0.300.0",
-    "react": "^18.2.0",git status
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.10.3"
   },
