@@ -3,7 +3,7 @@ import { PlusCircle, Edit, Trash2 } from 'lucide-react';
 
 // Componente de gerenciamento de APIs e integrações
 const IntegrationsManager = ({ userRole, apiKeys, webhooks, integrations, onCreateApiKey, onRevokeApiKey, onAddWebhook, onUpdateWebhook, onDeleteWebhook }) => {
-  const [activeTab, setActiveTab] = useState('api-keys');
+  const [activeTab] = useState('api-keys'); // Removida a atribuição de setActiveTab
   const [showApiKeyForm, setShowApiKeyForm] = useState(false);
   const [apiKeyName, setApiKeyName] = useState('');
   const [newApiKey, setNewApiKey] = useState(null);
