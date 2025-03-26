@@ -1,7 +1,7 @@
 {
   "name": "afabrica-gestao-fornecedores",
   "version": "1.0.0",
-  "description": "Sistema de gestão de fornecedores para AFÁBRICA Eventos",
+  "description": "Sistema de gestão de fornecedores para A FÁBRICA",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
