@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap');
 
 :root {
@@ -8,11 +12,17 @@
 
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Neue Montreal', Arial, sans-serif;
+  font-family: 'Neue Montreal', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--tertiary);
+  color: var(--primary);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Source Serif Pro', serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
