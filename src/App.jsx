@@ -14,6 +14,19 @@ import SubscriptionManager from './components/SubscriptionManager';
 import IntegrationsManager from './components/IntegrationsManager';
 import Onboarding from './components/Onboarding';
 import { Calendar, MessageSquare, DollarSign } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RelatoriosPage from './pages/RelatoriosPage';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Rotas existentes */}
+        <Route path="/relatorios" element={<RelatoriosPage />} />
+      </Routes>
+    </Router>
+  );
+}
 
 const App = () => {
   const [user, setUser] = useState(null);

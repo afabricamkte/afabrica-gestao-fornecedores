@@ -1,284 +1,240 @@
-import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, 
-         BarChart, Bar, PieChart as RePieChart, Pie, Cell } from 'recharts';
-import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { 
+  BarChart3, LineChart, PieChart, Calendar, Filter, RefreshCcw, Download
+} from 'lucide-react';
+import GraficoFornecedor from './GraficoFornecedor';
+import GraficoEvento from './GraficoEvento';
 
-const RelatoriosManager = ({ fornecedores, eventos, servicos }) => {
-  const [selectedReport, setSelectedReport] = useState('fornecedores');
-  
-  // Dados para gráfico de fornecedores por serviço
-  const fornecedoresPorServico = _.groupBy(fornecedores || [], 'tipoServico');
-  const dataServicos = Object.keys(fornecedoresPorServico || {}).map(servico => ({
-    name: servico,
-    value: fornecedoresPorServico[servico].length
-  }));
-  
-  // Dados para gastos por evento
-  const dataEventos = (eventos || []).map(evento => ({
-    name: evento.nome,
-    valor: evento.orcamentoTotal || 0
-  }));
-  
-  // Dados para status de pagamento
-  const pagamentosStatus = _.groupBy(fornecedores || [], 'statusPagamento');
-  const dataPagamentos = Object.keys(pagamentosStatus || {}).map(status => ({
-    name: status,
-    value: pagamentosStatus[status].length
-  }));
-  
-  // Cores para gráficos
-  const COLORS = ['#010d36', '#1e40af', '#3b82f6', '#93c5fd', '#dfd7c0', '#d1d5db'];
-  
-  // Total de orçamento comprometido
-  const totalOrcamento = (eventos || []).reduce((sum, e) => sum + (e.orcamentoTotal || 0), 0);
-  
-  // Totais por status de evento
-  const eventosPorStatus = _.groupBy(eventos || [], 'status');
-  
+// Dados de exemplo para os gráficos (em um cenário real, isso viria de uma API)
+const dadosFornecedores = [
+  { nome: "Fornecedor A", valor: 125000, tickets: 42, periodo: "2024-Q1" },
+  { nome: "Fornecedor B", valor: 98500, tickets: 36, periodo: "2024-Q1" },
+  { nome: "Fornecedor C", valor: 145000, tickets: 51, periodo: "2024-Q1" },
+  { nome: "Fornecedor D", valor: 76200, tickets: 29, periodo: "2024-Q1" },
+  { nome: "Fornecedor E", valor: 110000, tickets: 38, periodo: "2024-Q1" },
+  { nome: "Fornecedor A", valor: 132000, tickets: 45, periodo: "2024-Q2" },
+  { nome: "Fornecedor B", valor: 105000, tickets: 39, periodo: "2024-Q2" },
+  { nome: "Fornecedor C", valor: 138000, tickets: 48, periodo: "2024-Q2" },
+  { nome: "Fornecedor D", valor: 82000, tickets: 31, periodo: "2024-Q2" },
+  { nome: "Fornecedor E", valor: 118000, tickets: 41, periodo: "2024-Q2" }
+];
+
+const dadosEventos = [
+  { data: "2024-01-15", participantes: 120, custo: 15000, satisfacao: 4.2, periodo: "2024-Q1" },
+  { data: "2024-02-05", participantes: 85, custo: 12000, satisfacao: 4.0, periodo: "2024-Q1" },
+  { data: "2024-02-25", participantes: 150, custo: 18000, satisfacao: 4.5, periodo: "2024-Q1" },
+  { data: "2024-03-10", participantes: 95, custo: 13500, satisfacao: 3.8, periodo: "2024-Q1" },
+  { data: "2024-04-05", participantes: 110, custo: 14000, satisfacao: 4.1, periodo: "2024-Q2" },
+  { data: "2024-04-20", participantes: 130, custo: 16000, satisfacao: 4.3, periodo: "2024-Q2" },
+  { data: "2024-05-12", participantes: 145, custo: 17500, satisfacao: 4.4, periodo: "2024-Q2" },
+  { data: "2024-06-01", participantes: 160, custo: 19000, satisfacao: 4.6, periodo: "2024-Q2" }
+];
+
+const RelatoriosManager = () => {
+  const [periodoSelecionado, setPeriodoSelecionado] = useState('');
+  const [tipoGraficoFornecedor, setTipoGraficoFornecedor] = useState('barra');
+  const [tipoGraficoEvento, setTipoGraficoEvento] = useState('linha');
+  const [mostrarTendencia, setMostrarTendencia] = useState(false);
+  const [carregando, setCarregando] = useState(false);
+
+  // Lista de períodos disponíveis
+  const periodos = ['', '2024-Q1', '2024-Q2'];
+  const nomePeriodos = {
+    '': 'Todos',
+    '2024-Q1': '1º Trimestre 2024',
+    '2024-Q2': '2º Trimestre 2024'
+  };
+
+  // Simular carregamento quando muda o período
+  useEffect(() => {
+    setCarregando(true);
+    const timer = setTimeout(() => {
+      setCarregando(false);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, [periodoSelecionado]);
+
+  // Função para baixar todos os dados
+  const baixarTodosOsDados = () => {
+    const todosDados = {
+      fornecedores: dadosFornecedores,
+      eventos: dadosEventos
+    };
+    
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(todosDados));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `relatorio_completo_${periodoSelecionado || 'todos'}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
+
+  // Atualizar relatórios (simulado)
+  const atualizarRelatorios = () => {
+    setCarregando(true);
+    setTimeout(() => {
+      setCarregando(false);
+    }, 1500);
+  };
+
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6">Relatórios e Análises</h2>
-      
-      <div className="mb-6">
-        <div className="flex space-x-2 border-b border-gray-200">
+    <div className="container mx-auto px-4 py-6">
+      <header className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Central de Relatórios</h1>
+        <p className="text-gray-600">Visualize e analise dados estratégicos da sua organização</p>
+      </header>
+
+      {/* Barra de controles globais */}
+      <div className="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-wrap gap-3 items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <div>
+            <label htmlFor="periodo" className="block text-sm font-medium text-gray-700 mb-1">
+              Período
+            </label>
+            <select
+              id="periodo"
+              value={periodoSelecionado}
+              onChange={(e) => setPeriodoSelecionado(e.target.value)}
+              className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              disabled={carregando}
+            >
+              {periodos.map(periodo => (
+                <option key={periodo} value={periodo}>{nomePeriodos[periodo]}</option>
+              ))}
+            </select>
+          </div>
+          
           <button
-            className={`py-2 px-4 font-medium border-b-2 ${
-              selectedReport === 'fornecedores'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-            onClick={() => setSelectedReport('fornecedores')}
+            onClick={atualizarRelatorios}
+            disabled={carregando}
+            className="flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-md hover:bg-blue-200 transition-colors mt-auto"
           >
-            Fornecedores
-          </button>
-          <button
-            className={`py-2 px-4 font-medium border-b-2 ${
-              selectedReport === 'eventos'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-            onClick={() => setSelectedReport('eventos')}
-          >
-            Eventos
-          </button>
-          <button
-            className={`py-2 px-4 font-medium border-b-2 ${
-              selectedReport === 'financeiro'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-            onClick={() => setSelectedReport('financeiro')}
-          >
-            Financeiro
+            <RefreshCcw size={16} className={carregando ? "animate-spin" : ""} />
+            <span>{carregando ? "Atualizando..." : "Atualizar Dados"}</span>
           </button>
         </div>
+
+        <button
+          onClick={baixarTodosOsDados}
+          className="flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-md hover:bg-green-200 transition-colors"
+        >
+          <Download size={16} />
+          <span>Exportar Todos os Dados</span>
+        </button>
       </div>
-      
-      {selectedReport === 'fornecedores' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Total de Fornecedores</h3>
-              <p className="text-3xl font-bold">{fornecedores ? fornecedores.length : 0}</p>
+
+      {/* Tabs para diferentes tipos de relatórios */}
+      <Tabs defaultValue="fornecedores" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="fornecedores" className="flex items-center space-x-2">
+            <BarChart3 size={16} />
+            <span>Fornecedores</span>
+          </TabsTrigger>
+          <TabsTrigger value="eventos" className="flex items-center space-x-2">
+            <Calendar size={16} />
+            <span>Eventos</span>
+          </TabsTrigger>
+        </TabsList>
+        
+        {/* Conteúdo da aba de Fornecedores */}
+        <TabsContent value="fornecedores" className="space-y-4">
+          <div className="bg-gray-50 p-3 rounded-lg flex flex-wrap gap-3 items-center">
+            <span className="font-medium text-gray-700 flex items-center">
+              <Filter size={16} className="mr-2" />
+              Tipo de Visualização:
+            </span>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setTipoGraficoFornecedor('barra')}
+                className={`flex items-center px-3 py-1 rounded-md ${
+                  tipoGraficoFornecedor === 'barra' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-white text-gray-700 border border-gray-300'
+                }`}
+              >
+                <BarChart3 size={16} className="mr-1" />
+                Barras
+              </button>
+              <button
+                onClick={() => setTipoGraficoFornecedor('pizza')}
+                className={`flex items-center px-3 py-1 rounded-md ${
+                  tipoGraficoFornecedor === 'pizza' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-white text-gray-700 border border-gray-300'
+                }`}
+              >
+                <PieChart size={16} className="mr-1" />
+                Pizza
+              </button>
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Valor Médio</h3>
-              <p className="text-3xl font-bold">
-                R$ {fornecedores && fornecedores.length > 0 
-                  ? (fornecedores.reduce((sum, f) => sum + (f.valor || 0), 0) / fornecedores.length || 0)
-                    .toLocaleString('pt-BR', { maximumFractionDigits: 2 })
-                  : '0,00'
-                }
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Avaliação Média</h3>
-              <div className="flex items-center">
-                <p className="text-3xl font-bold mr-2">
-                  {fornecedores && fornecedores.length > 0
-                    ? (fornecedores.reduce((sum, f) => sum + (f.avaliacao || 0), 0) / fornecedores.length || 0)
-                      .toFixed(1)
-                    : '0.0'
-                  }
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-yellow-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+          </div>
+          
+          <GraficoFornecedor 
+            dados={dadosFornecedores} 
+            periodo={periodoSelecionado} 
+            tipo={tipoGraficoFornecedor} 
+          />
+        </TabsContent>
+        
+        {/* Conteúdo da aba de Eventos */}
+        <TabsContent value="eventos" className="space-y-4">
+          <div className="bg-gray-50 p-3 rounded-lg flex flex-wrap gap-3 items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <span className="font-medium text-gray-700 flex items-center">
+                <Filter size={16} className="mr-2" />
+                Tipo de Visualização:
+              </span>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setTipoGraficoEvento('linha')}
+                  className={`flex items-center px-3 py-1 rounded-md ${
+                    tipoGraficoEvento === 'linha' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white text-gray-700 border border-gray-300'
+                  }`}
                 >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+                  <LineChart size={16} className="mr-1" />
+                  Linhas
+                </button>
+                <button
+                  onClick={() => setTipoGraficoEvento('area')}
+                  className={`flex items-center px-3 py-1 rounded-md ${
+                    tipoGraficoEvento === 'area' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white text-gray-700 border border-gray-300'
+                  }`}
+                >
+                  <BarChart3 size={16} className="mr-1" />
+                  Áreas
+                </button>
               </div>
+            </div>
+            
+            <div className="flex items-center">
+              <label className="inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  className="sr-only peer"
+                  checked={mostrarTendencia}
+                  onChange={() => setMostrarTendencia(!mostrarTendencia)}
+                />
+                <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                <span className="ml-3 text-sm font-medium text-gray-700">Mostrar Tendência</span>
+              </label>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-bold mb-4">Fornecedores por Tipo de Serviço</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RePieChart>
-                    <Pie
-                      data={dataServicos}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {dataServicos.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      formatter={(value) => [`${value} fornecedores`, 'Quantidade']}
-                    />
-                    <Legend />
-                  </RePieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-bold mb-4">Status de Pagamento</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={dataPagamentos}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="value" fill="#010d36" name="Fornecedores" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {selectedReport === 'eventos' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Total de Eventos</h3>
-              <p className="text-3xl font-bold">{eventos ? eventos.length : 0}</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Orçamento Total</h3>
-              <p className="text-3xl font-bold">
-                R$ {totalOrcamento.toLocaleString('pt-BR')}
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Orçamento Médio</h3>
-              <p className="text-3xl font-bold">
-                R$ {eventos && eventos.length > 0
-                  ? (totalOrcamento / eventos.length || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 })
-                  : '0,00'
-                }
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-bold mb-4">Eventos por Status</h3>
-              <div className="space-y-4">
-                {Object.keys(eventosPorStatus).map((status) => (
-                  <div key={status} className="flex items-center">
-                    <div className="w-1/3 font-medium">{status}</div>
-                    <div className="w-2/3">
-                      <div className="bg-gray-200 rounded-full h-4 w-full">
-                        <div 
-                          className="bg-primary rounded-full h-4" 
-                          style={{ width: `${(eventosPorStatus[status].length / (eventos ? eventos.length : 1)) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="text-sm mt-1">{eventosPorStatus[status].length} eventos</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-bold mb-4">Orçamento por Evento</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={dataEventos}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => [`R$ ${value.toLocaleString('pt-BR')}`, 'Orçamento']} />
-                    <Bar dataKey="valor" fill="#dfd7c0" name="Orçamento" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {selectedReport === 'financeiro' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Orçamento Total</h3>
-              <p className="text-3xl font-bold text-green-600">
-                R$ {totalOrcamento.toLocaleString('pt-BR')}
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Custos com Fornecedores</h3>
-              <p className="text-3xl font-bold text-red-600">
-                R$ {(fornecedores || []).reduce((sum, f) => sum + (f.valor || 0), 0).toLocaleString('pt-BR')}
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-2">Margem Estimada</h3>
-              <p className="text-3xl font-bold">
-                R$ {(totalOrcamento - (fornecedores || []).reduce((sum, f) => sum + (f.valor || 0), 0)).toLocaleString('pt-BR')}
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-bold mb-4">Análise Financeira por Mês</h3>
-              <div className="h-72">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={[
-                    { mes: 'Jan', receita: 35000, custo: 27000, margem: 8000 },
-                    { mes: 'Fev', receita: 42000, custo: 29000, margem: 13000 },
-                    { mes: 'Mar', receita: 28000, custo: 22000, margem: 6000 },
-                    { mes: 'Abr', receita: 85000, custo: 68000, margem: 17000 },
-                    { mes: 'Mai', receita: 42000, custo: 33000, margem: 9000 },
-                    { mes: 'Jun', receita: 28500, custo: 21000, margem: 7500 }
-                  ]}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="mes" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => `R$ ${value.toLocaleString('pt-BR')}`} />
-                    <Legend />
-                    <Line type="monotone" dataKey="receita" stroke="#010d36" strokeWidth={2} name="Receita" />
-                    <Line type="monotone" dataKey="custo" stroke="#ef4444" strokeWidth={2} name="Custo" />
-                    <Line type="monotone" dataKey="margem" stroke="#10b981" strokeWidth={2} name="Margem" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+          <GraficoEvento 
+            dados={dadosEventos} 
+            periodo={periodoSelecionado} 
+            tipo={tipoGraficoEvento}
+            incluirTendencia={mostrarTendencia}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
