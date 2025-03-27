@@ -17,17 +17,7 @@ import { Calendar, MessageSquare, DollarSign } from 'lucide-react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RelatoriosPage from './pages/RelatoriosPage';
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Rotas existentes */}
-        <Route path="/relatorios" element={<RelatoriosPage />} />
-      </Routes>
-    </Router>
-  );
-}
-
+// Unificamos os componentes em um único App
 const App = () => {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -330,111 +320,124 @@ const App = () => {
   
   const currentOrg = organizations.find(org => org.id === currentOrgId) || organizations[0];
   
+  // Aqui integramos o roteamento e a interface principal
   return (
-    <div className="flex flex-col min-h-screen">
-      <GlobalStyles />
-      <Header 
-        user={user} 
-        organizations={organizations}
-        currentOrg={currentOrg}
-        onOrgChange={setCurrentOrgId}
-        onLogout={handleLogout} 
-      />
-      
-      <div className="flex flex-1">
-        <Sidebar 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab}
-          userRole={user.role}
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <GlobalStyles />
+        <Header 
+          user={user} 
+          organizations={organizations}
+          currentOrg={currentOrg}
+          onOrgChange={setCurrentOrgId}
+          onLogout={handleLogout} 
         />
         
-        <main className="flex-1 bg-tertiary overflow-auto">
-          {activeTab === 'dashboard' && (
-            <Dashboard fornecedores={fornecedores} servicos={servicos} />
-          )}
+        <div className="flex flex-1">
+          <Sidebar 
+            activeTab={activeTab} 
+            setActiveTab={setActiveTab}
+            userRole={user.role}
+          />
           
-          {activeTab === 'fornecedores' && (
-            <FornecedoresManager
-              fornecedores={fornecedores}
-              servicos={servicos}
-              userRole={user.role}
-              onAddFornecedor={handleAddFornecedor}
-              onUpdateFornecedor={handleUpdateFornecedor}
-              onDeleteFornecedor={handleDeleteFornecedor}
-            />
-          )}
-          
-          {activeTab === 'servicos' && (
-            <ServicosManager
-              servicos={servicos}
-              userRole={user.role}
-              onAddServico={handleAddServico}
-              onUpdateServico={handleUpdateServico}
-              onDeleteServico={handleDeleteServico}
-            />
-          )}
-          
-          {activeTab === 'eventos' && (
-            <EventosManager
-              eventos={eventos}
-              fornecedores={fornecedores}
-              userRole={user.role}
-              onAddEvento={(evento) => setEventos([...eventos, evento])}
-              onUpdateEvento={(updatedEvento) => {
-                setEventos(eventos.map(e => e.id === updatedEvento.id ? updatedEvento : e));
-              }}
-              onDeleteEvento={(id) => {
-                setEventos(eventos.filter(e => e.id !== id));
-              }}
-            />
-          )}
-          
-          {activeTab === 'relatorios' && (
-            <RelatoriosManager
-              fornecedores={fornecedores}
-              eventos={eventos}
-              servicos={servicos}
-            />
-          )}
-          
-          {activeTab === 'configuracoes' && (
-            <ConfiguracoesManager userRole={user.role} />
-          )}
-          
-          {activeTab === 'users' && (
-            <UsersManager
-              userRole={user.role}
-              users={users}
-              onAddUser={handleAddUser}
-              onUpdateUser={handleUpdateUser}
-              onDeleteUser={handleDeleteUser}
-            />
-          )}
-          
-          {activeTab === 'subscription' && (
-            <SubscriptionManager
-              userRole={user.role}
-              subscription={subscription}
-              onUpdatePlan={handleUpdatePlan}
-            />
-          )}
-          
-          {activeTab === 'integrations' && (
-            <IntegrationsManager
-              userRole={user.role}
-              apiKeys={apiKeys}
-              webhooks={webhooks}
-              integrations={integrations}
-              onCreateApiKey={handleCreateApiKey}
-              onRevokeApiKey={handleRevokeApiKey}
-              onAddWebhook={handleAddWebhook}
-              onUpdateWebhook={handleUpdateWebhook}
-              onDeleteWebhook={handleDeleteWebhook}
-            />
-          )}
-        </main>
+          <main className="flex-1 bg-tertiary overflow-auto">
+            {/* Adicionado Routes para rotas específicas */}
+            <Routes>
+              <Route path="/relatorios" element={<RelatoriosPage />} />
+              
+              {/* Rota padrão para o sistema baseado em abas */}
+              <Route path="*" element={
+                <>
+                  {activeTab === 'dashboard' && (
+                    <Dashboard fornecedores={fornecedores} servicos={servicos} />
+                  )}
+                  
+                  {activeTab === 'fornecedores' && (
+                    <FornecedoresManager
+                      fornecedores={fornecedores}
+                      servicos={servicos}
+                      userRole={user.role}
+                      onAddFornecedor={handleAddFornecedor}
+                      onUpdateFornecedor={handleUpdateFornecedor}
+                      onDeleteFornecedor={handleDeleteFornecedor}
+                    />
+                  )}
+                  
+                  {activeTab === 'servicos' && (
+                    <ServicosManager
+                      servicos={servicos}
+                      userRole={user.role}
+                      onAddServico={handleAddServico}
+                      onUpdateServico={handleUpdateServico}
+                      onDeleteServico={handleDeleteServico}
+                    />
+                  )}
+                  
+                  {activeTab === 'eventos' && (
+                    <EventosManager
+                      eventos={eventos}
+                      fornecedores={fornecedores}
+                      userRole={user.role}
+                      onAddEvento={(evento) => setEventos([...eventos, evento])}
+                      onUpdateEvento={(updatedEvento) => {
+                        setEventos(eventos.map(e => e.id === updatedEvento.id ? updatedEvento : e));
+                      }}
+                      onDeleteEvento={(id) => {
+                        setEventos(eventos.filter(e => e.id !== id));
+                      }}
+                    />
+                  )}
+                  
+                  {activeTab === 'relatorios' && (
+                    <RelatoriosManager
+                      fornecedores={fornecedores}
+                      eventos={eventos}
+                      servicos={servicos}
+                    />
+                  )}
+                  
+                  {activeTab === 'configuracoes' && (
+                    <ConfiguracoesManager userRole={user.role} />
+                  )}
+                  
+                  {activeTab === 'users' && (
+                    <UsersManager
+                      userRole={user.role}
+                      users={users}
+                      onAddUser={handleAddUser}
+                      onUpdateUser={handleUpdateUser}
+                      onDeleteUser={handleDeleteUser}
+                    />
+                  )}
+                  
+                  {activeTab === 'subscription' && (
+                    <SubscriptionManager
+                      userRole={user.role}
+                      subscription={subscription}
+                      onUpdatePlan={handleUpdatePlan}
+                    />
+                  )}
+                  
+                  {activeTab === 'integrations' && (
+                    <IntegrationsManager
+                      userRole={user.role}
+                      apiKeys={apiKeys}
+                      webhooks={webhooks}
+                      integrations={integrations}
+                      onCreateApiKey={handleCreateApiKey}
+                      onRevokeApiKey={handleRevokeApiKey}
+                      onAddWebhook={handleAddWebhook}
+                      onUpdateWebhook={handleUpdateWebhook}
+                      onDeleteWebhook={handleDeleteWebhook}
+                    />
+                  )}
+                </>
+              } />
+            </Routes>
+          </main>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 };
 
